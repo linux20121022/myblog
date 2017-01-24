@@ -12,16 +12,17 @@ use kucha\ueditor\UEditor;
 
 <div class="article-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]); ?>
 
     <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
-
+    <?= $form->field($model,'img_src')->fileInput()->label("图片");?>
     <?= $form->field($model,'content')->widget('kucha\ueditor\UEditor',[])->label("内容");?>
     <?= $form->field($model, 'tags')->textarea(['rows' => 4]) ?>
 
     <?= $form->field($model, 'status')->dropDownList($status_arr) ?>
     <?= $form->field($model, 'content_id')->hiddenInput()->label(false) ?>
     <?= $form->field($model, 'id')->hiddenInput()->label(false) ?>
+    <?= $form->field($model, 'file_id')->hiddenInput()->label(false) ?>
 <!--     $form->field($model, 'create_time')->textInput() -->
 
 <!--     $form->field($model, 'update_time')->textInput() -->
