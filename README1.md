@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 Yii 2 Advanced Project Template
 ===============================
 
@@ -54,7 +53,3 @@ frontend
 vendor/                  contains dependent 3rd-party packages
 environments/            contains environment-based overrides
 ```
-=======
-# myblog
-myblog
->>>>>>> 9c1e656cf8fdd703ad5b6807138b7078f92f4553
