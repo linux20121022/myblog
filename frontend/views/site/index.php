@@ -20,9 +20,9 @@ $this->title = 'My Yii Application';
 <!-- One -->
 <section id="one">
     <header class="major">
-        <h2>php介绍</h2>
+        <h2>介绍</h2>
     </header>
-    <p>PHP（外文名:PHP: Hypertext Preprocessor，中文名：“超文本预处理器”）是一种通用开源脚本语言</p>
+    <p>该博客是为了记录平时遇到的问题和项目经验</p>
 <!--    <ul class="actions">-->
 <!--        <li><a href="#" class="button">Learn More</a></li>-->
 <!--    </ul>-->
@@ -30,7 +30,7 @@ $this->title = 'My Yii Application';
 
 <!-- Two -->
 <section id="two">
-    <h2>Recent Work</h2>
+    <h2>图文列表</h2>
     <div class="row">
         <article class="6u 12u$(3) work-item">
             <a href="images/fulls/01.jpg" class="image fit thumb"><img src="images/thumbs/01.jpg" alt="" /></a>

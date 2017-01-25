@@ -8,8 +8,9 @@ use Yii;
  * This is the model class for table "blog_file".
  *
  * @property integer $id
- * @property integer $content_id
+ * @property integer $article_id
  * @property integer $status
+ * @property integer $img_size
  * @property varchar $url
  * @property integer $create_time
  * @property integer $update_time
@@ -30,8 +31,8 @@ class File extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['content_id','url'], 'required'],
-            [['content_id', 'status', 'create_time', 'update_time'], 'integer'],
+            [['article_id'], 'required'],
+            [['article_id', 'status', 'create_time', 'update_time', 'img_size'], 'integer'],
         ];
     }
 
@@ -42,9 +43,10 @@ class File extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'content_id' => 'Content ID',
+            'article_id' => 'Article ID',
             'status' => 'Status',
-            'url' => 'url',
+            'img_size' => 'Img Size',
+            'img_src' => 'Img Src',
             'create_time' => 'Create Time',
             'update_time' => 'Update Time',
         ];

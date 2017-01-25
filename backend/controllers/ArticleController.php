@@ -3,6 +3,7 @@
 namespace backend\controllers;
 
 use common\helps\ConFun;
+use common\models\File;
 use Yii;
 use common\models\Article;
 use common\models\SearchArticle;
@@ -71,8 +72,11 @@ class ArticleController extends Controller
         //查询文章的状态
         $article = new ArticleStatus();
         $status_arr = $article->getStatus();
+        $img_src = $model->file->img_src;
         return $this->render('view', [
-            'model' => $model,'status_arr'=>$status_arr
+            'model' => $model,
+            'status_arr'=>$status_arr,
+            'src' => $img_src
         ]);
     }
 
@@ -108,6 +112,7 @@ class ArticleController extends Controller
     {
         $article_model = new Article();
         $model = $this->findModel($id);
+        $file_model = new File();
         if (Yii::$app->request->isPost) {
             $post = Yii::$app->request->post();
             $model->addArticle($post);
@@ -118,8 +123,13 @@ class ArticleController extends Controller
             $status_arr = $article->getStatus();
             $article_extends = $model->articleExtends;
             $model->content = $article_extends ? html::decode($article_extends->content) : '';
+            $model->create_time = date("Y-m-d H:i:s",$model->create_time);
+            $img_src = isset($model->file->img_src) ? $model->file->img_src : '/default/1.img';
             return $this->render('update', [
-                'model' => $model,'status_arr'=>$status_arr
+                'model' => $model,
+                'file_model' => $file_model,
+                'status_arr'=>$status_arr,
+                'img_src' => $img_src
             ]);
     }
     }

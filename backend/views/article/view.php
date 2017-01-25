@@ -32,6 +32,13 @@ $this->params['breadcrumbs'][] = $this->title;
             'id',
             'title',
             [
+                'attribute'=>'img',
+                'img:image',
+                'format' => ['image',['width'=>'166','height'=>'166']],
+                'value' =>  $src,
+                'label'=>'图片',
+            ],
+            [
                 'attribute' => 'content',
                 'format' => 'html',
                 'label' => '内容',

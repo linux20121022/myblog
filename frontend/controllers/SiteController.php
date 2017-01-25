@@ -74,6 +74,7 @@ class SiteController extends Controller
     public function actionIndex()
     {
         $user = User::findOne(1);
+
         return $this->render('index',[
             'user' => $user,
         ]);
