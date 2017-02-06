@@ -2,7 +2,6 @@
 
 namespace backend\controllers;
 
-use common\helps\ConFun;
 use common\models\File;
 use Yii;
 use common\models\Article;

@@ -186,4 +186,20 @@ class Article extends \yii\db\ActiveRecord
             $transaction->rollBack();
         }
     }
+
+    /**
+     * @desc 首页的文章图文列表
+     */
+    public static function indexPicList($p = 0){
+        $data = Article::find()->joinwith("file")->joinWith("articleExtends")->select("title,tags,img_src,content,blog_article.id")->where(['>', 'file_id', 0])->andWhere(['=', 'blog_article.status', 2])->orderBy('blog_article.id desc')->offset($p*6)->limit(6)->all();
+//        echo Article::find()->joinwith("file")->joinWith("articleExtends")->select("title,tags,img_src,content,blog_article.id")->where(['>', 'file_id', 0])->andWhere(['=', 'blog_article.status', 2])->orderBy('blog_article.id desc')->offset($p*6)->limit(6)->createCommand()->getRawSql();
+//        var_dump($data);
+        return $data;
+    }
+    public static function indexList($p = 0){
+        $data = Article::find()->joinwith("file")->joinWith("articleExtends")->select("title,tags,img_src,content,blog_article.id")->where(['=', 'file_id', 0])->andWhere(['=', 'blog_article.status', 2])->orderBy('blog_article.id desc')->offset($p*8)->limit(8)->all();
+//        echo Article::find()->joinwith("file")->joinWith("articleExtends")->select("title,tags,img_src,content,blog_article.id")->where(['>', 'file_id', 0])->andWhere(['=', 'blog_article.status', 2])->orderBy('blog_article.id desc')->offset($p*6)->limit(6)->createCommand()->getRawSql();
+//        var_dump($data);
+        return $data;
+    }
 }

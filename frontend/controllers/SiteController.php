@@ -1,6 +1,8 @@
 <?php
 namespace frontend\controllers;
 
+use common\models\Article;
+use GuzzleHttp\Psr7\Response;
 use Yii;
 use yii\base\InvalidParamException;
 use yii\web\BadRequestHttpException;
@@ -13,6 +15,8 @@ use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
 use frontend\models\ContactForm;
 use common\models\User;
+use yii\helpers\StringHelper;
+use yii\helpers\Html;
 
 /**
  * Site controller
@@ -74,12 +78,53 @@ class SiteController extends Controller
     public function actionIndex()
     {
         $user = User::findOne(1);
-
+        $picList = Article::indexPicList();
+        $artList = Article::indexList();
         return $this->render('index',[
             'user' => $user,
+            'pic' => $picList,
+            'artList' => $artList
         ]);
     }
 
+    /**
+     * @desc 图文列表
+     * @return array
+     */
+    public function actionAjaxlist()
+    {
+        Yii::$app->response->format= \yii\web\Response::FORMAT_JSON;
+        $p = Yii::$app->request->post('p');
+        $picList = Article::indexPicList($p);
+        $picData = array();
+        foreach($picList as $key=>$val){
+            $picData[$key]['img_src'] =  Yii::$app->params['adminUrl'] .$val->img_src;
+            $picData[$key]['tags'] = $val->tags;
+            $picData[$key]['title'] = StringHelper::truncate_utf8_string(Html::decode($val->title),20);
+            $picData[$key]['content'] = StringHelper::truncate_utf8_string(Html::decode($val->content),25);
+            $picData[$key]['id'] = $val->id;
+        }
+        return ['code'=>1,'msg'=>'成功','data'=>$picData];
+    }
+
+    /**
+     * @desc 纯文字列表
+     * @return array
+     */
+    public  function actionAjaxartlist(){
+        Yii::$app->response->format= \yii\web\Response::FORMAT_JSON;
+        $p = Yii::$app->request->post('p');
+        $picList = Article::indexList($p);
+        $picData = array();
+        foreach($picList as $key=>$val){
+//            $picData[$key]['img_src'] =  Yii::$app->params['adminUrl'] .$val->img_src;
+            $picData[$key]['tags'] = $val->tags;
+            $picData[$key]['title'] = StringHelper::truncate_utf8_string(Html::decode($val->title),20);
+            $picData[$key]['content'] = StringHelper::truncate_utf8_string(Html::decode($val->content),25);
+            $picData[$key]['id'] = $val->id;
+        }
+        return ['code'=>1,'msg'=>'成功','data'=>$picData];
+    }
     /**
      * Logs in a user.
      *
