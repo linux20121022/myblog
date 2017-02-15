@@ -71,7 +71,7 @@ class ArticleController extends Controller
         //查询文章的状态
         $article = new ArticleStatus();
         $status_arr = $article->getStatus();
-        $img_src = $model->file->img_src;
+        $img_src = isset($model->file->img_src) ? $model->file->img_src : '';
         return $this->render('view', [
             'model' => $model,
             'status_arr'=>$status_arr,
@@ -87,6 +87,7 @@ class ArticleController extends Controller
     public function actionCreate()
     {
         $model = new Article();
+        $file_model = new File();
         if (Yii::$app->request->isPost) {
             $post = Yii::$app->request->post();
             $flag = $model->addArticle($post);
@@ -96,7 +97,10 @@ class ArticleController extends Controller
             $article = new ArticleStatus();
             $status_arr = $article->getStatus();
             return $this->render('create', [
-                'model' => $model,'status_arr'=>$status_arr
+                'model' => $model,
+                'status_arr'=>$status_arr,
+                'file_model' => $file_model,
+                'img_src' => ''
             ]);
         }
     }

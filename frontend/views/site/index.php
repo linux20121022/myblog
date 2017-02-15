@@ -2,6 +2,9 @@
 
 use yii\helpers\StringHelper;
 use yii\helpers\Html;
+use yii\captcha\Captcha;
+use yii\widgets\ActiveForm;
+use yii\helpers\Url;
 
 /* @var $this yii\web\View */
 
@@ -36,11 +39,14 @@ $this->title = 'My Yii Application';
     <h2>图文列表</h2>
     <div class="row" id="pic_list">
         <?php foreach($pic as $key=>$val) { ?>
+            <a href="<?php echo Url::to(["site/view",'id'=> $val->id])?>" target="_blank">
             <article class="6u 12u$(3) work-item">
-                <a href="images/fulls/01.jpg" class="image fit thumb"><img style="width:312px;height: 182px" src="<?php echo Yii::$app->params['adminUrl'] .$val->img_src?>" alt="" /></a>
-                <h3><?php echo $val->title?></h3>
-                <p><?php echo StringHelper::truncate_utf8_string(html::decode($val->content),25) ?></p>
+                <img style="width:312px;height: 182px" src="<?php echo Yii::$app->params['adminUrl'] .$val->img_src?>" alt="" />
+                    <h3><?php echo $val->title?>11</h3>
+                    <p><?php echo StringHelper::truncate_utf8_string(html::decode($val->content),25) ?></p>
             </article>
+            </a>
+
         <?php }?>
 <!--        <article class="6u$ 12u$(3) work-item">-->
 <!--            <a href="images/fulls/02.jpg" class="image fit thumb"><img src="images/thumbs/02.jpg" alt="" /></a>-->
@@ -125,15 +131,17 @@ $this->title = 'My Yii Application';
 <section>
     <div id="art_list">
     <?php foreach($artList as $key=>$val){ ?>
+        <a href="<?php echo Url::to(["site/view",'id'=> $val->id]);?>">
     <h4><?php echo $val->title?></h4>
     <p><?php echo StringHelper::truncate_utf8_string(html::decode($val->content),80) ?></p>
+        </a>
     <?php }?>
     </div>
     <ul class="actions">
         <form action="" id="page_art_action">
             <input type="hidden" value="<?php echo Yii::$app->request->csrfToken; ?>" name="_csrf-frontend" >
             <input type="hidden" value="1" id="page_art_data" name="p" >
-            <li><a href="javascript:void(0);" class="button" page="1" src="/index.php?r=site/ajaxlist" id="next_art_page">点击加载更多</a></li>
+            <li><a href="javascript:void(0);" class="button" page="1" src="/index.php?r=site/ajaxartlist" id="next_art_page">点击加载更多</a></li>
         </form>
     </ul>
 </section>
@@ -339,56 +347,10 @@ $this->title = 'My Yii Application';
 
 <section>
     <h4>联系方式</h4>
-    <form method="post" action="#">
-        <div class="row uniform 50%">
-            <div class="6u 12u$(3)">
-                <input type="text" name="demo-name" id="demo-name" value="" placeholder="Name" />
-            </div>
-            <div class="6u$ 12u$(3)">
-                <input type="email" name="demo-email" id="demo-email" value="" placeholder="Email" />
-            </div>
-<!--            <div class="12u$">-->
-<!--                <div class="select-wrapper">-->
-<!--                    <select name="demo-category" id="demo-category">-->
-<!--                        <option value="">- Category -</option>-->
-<!--                        <option value="1">Manufacturing</option>-->
-<!--                        <option value="1">Shipping</option>-->
-<!--                        <option value="1">Administration</option>-->
-<!--                        <option value="1">Human Resources</option>-->
-<!--                    </select>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--            <div class="4u 12u$(2)">-->
-<!--                <input type="radio" id="demo-priority-low" name="demo-priority" checked>-->
-<!--                <label for="demo-priority-low">Low Priority</label>-->
-<!--            </div>-->
-<!--            <div class="4u 12u$(2)">-->
-<!--                <input type="radio" id="demo-priority-normal" name="demo-priority">-->
-<!--                <label for="demo-priority-normal">Normal Priority</label>-->
-<!--            </div>-->
-<!--            <div class="4u$ 12u(2)">-->
-<!--                <input type="radio" id="demo-priority-high" name="demo-priority">-->
-<!--                <label for="demo-priority-high">High Priority</label>-->
-<!--            </div>-->
-<!--            <div class="6u 12u$(2)">-->
-<!--                <input type="checkbox" id="demo-copy" name="demo-copy">-->
-<!--                <label for="demo-copy">Email me a copy of this message</label>-->
-<!--            </div>-->
-<!--            <div class="6u$ 12u$(2)">-->
-<!--                <input type="checkbox" id="demo-human" name="demo-human" checked>-->
-<!--                <label for="demo-human">I am a human and not a robot</label>-->
-<!--            </div>-->
-            <div class="12u$">
-                <textarea name="demo-message" id="demo-message" placeholder="Enter your message" rows="6"></textarea>
-            </div>
-            <div class="12u$">
-                <ul class="actions">
-                    <li><input type="submit" value="Send Message" class="special" /></li>
-                    <li><input type="reset" value="Reset" /></li>
-                </ul>
-            </div>
-        </div>
-    </form>
+    <div id="contractForm">
+
+    </div>
+    <div id="success-msg" style="text-align: center;display: none;">留言成功</div>
 </section>
 
 <!--<section>-->
@@ -416,7 +378,7 @@ $this->title = 'My Yii Application';
 </section>
 </div>
 <?php $this->registerJsFile('@web/js/jquery.min.js');?>
-<?php $this->registerJsFile('@web/jquery.poptrox.min.js');?>
+<?php $this->registerJsFile('@web/js/jquery.poptrox.min.js');?>
 <?php $this->registerJsFile('@web/js/skel.min.js');?>
 <?php $this->registerJsFile('@web/js/init.js');?>
 <?php $this->registerJsFile('@web/js/common.js');?>

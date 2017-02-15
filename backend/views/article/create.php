@@ -15,7 +15,9 @@ $this->title = '新建';
     <h1><?= Html::encode($this->title) ?></h1>
 
     <?= $this->render('_form', [
-        'model' => $model,'status_arr'=>$status_arr
+        'model' => $model,
+        'status_arr'=>$status_arr,
+        'file_model' => $file_model
     ]) ?>
 
 </div>

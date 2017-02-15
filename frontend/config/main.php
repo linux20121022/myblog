@@ -29,7 +29,10 @@ return [
             'targets' => [
                 [
                     'class' => 'yii\log\FileTarget',
-                    'levels' => ['error', 'warning'],
+                    'levels' => ['error', 'warning','info','trace'],
+                    //表示以yii\db\或者app\models\开头的分类都会写入这个文件
+                    'categories'=>['yii\db\*','app\models\*'],
+                    'logFile' => "@runtime/logs/".date('Ymd')."sql.log",
                 ],
             ],
         ],

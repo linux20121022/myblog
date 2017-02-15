@@ -125,7 +125,7 @@ class Article extends \yii\db\ActiveRecord
         $transaction = Yii::$app->db->beginTransaction();
         try {
             $model_extend = new ArticleExtend();
-            if($post['Article']['content_id']) {
+            if(isset($post['Article']['content_id'])) {
                 //更新内容表
                 $update_model_extend = $model_extend->findOne($post['Article']['content_id']);
                 $update_model_extend->content = Html::encode($post['Article']['content']);
@@ -138,7 +138,7 @@ class Article extends \yii\db\ActiveRecord
                 $model_extend_id = $model_extend->primaryKey;
             }
             $file = new File();
-            if($post['Article']['file_id'] > 0 && !empty($_FILES['File']['name']['img_src'])){
+            if(isset($post['Article']['content_id']) && $post['Article']['file_id'] > 0 && !empty($_FILES['File']['name']['img_src'])){
                 //更新图片
                 $update_file = $file->findOne($post['Article']['file_id']);
                 $update_file->img_src = UploadedFile::getInstance($update_file,'img_src');
@@ -196,9 +196,19 @@ class Article extends \yii\db\ActiveRecord
 //        var_dump($data);
         return $data;
     }
+
+    /**
+     * @desc 纯文章列表
+     * @param int $p
+     * @return array|\yii\db\ActiveRecord[]
+     */
     public static function indexList($p = 0){
         $data = Article::find()->joinwith("file")->joinWith("articleExtends")->select("title,tags,img_src,content,blog_article.id")->where(['=', 'file_id', 0])->andWhere(['=', 'blog_article.status', 2])->orderBy('blog_article.id desc')->offset($p*8)->limit(8)->all();
-//        echo Article::find()->joinwith("file")->joinWith("articleExtends")->select("title,tags,img_src,content,blog_article.id")->where(['>', 'file_id', 0])->andWhere(['=', 'blog_article.status', 2])->orderBy('blog_article.id desc')->offset($p*6)->limit(6)->createCommand()->getRawSql();
+//        echo  Article::find()->joinwith("file")->joinWith("articleExtends")->select("title,tags,img_src,content,blog_article.id")->where(['=', 'file_id', 0])->andWhere(['=', 'blog_article.status', 2])->orderBy('blog_article.id desc')->offset($p*8)->limit(8)->createCommand()->getRawSql();
+        return $data;
+    }
+    public static function view(){
+        $data = Article::find()->joinwith("file")->joinWith("articleExtends")->select("title,tags,img_src,content,blog_article.id")->where(['>', 'file_id', 0])->andWhere(['=', 'blog_article.status', 2])->orderBy('blog_article.id desc')->find();
 //        var_dump($data);
         return $data;
     }

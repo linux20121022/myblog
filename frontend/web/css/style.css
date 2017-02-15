@@ -1240,3 +1240,73 @@
 	body.is-touch .poptrox-popup .closer {
 		opacity: 1.0 !important;
 	}
+
+.h-article-share {
+    height: 45px;
+}
+.h-icon-s2 {
+    display: inline-block;
+    width: 44px;
+    height: 44px;
+    vertical-align: middle;
+    background: url(/images/article-bottom-share.png) no-repeat;
+}
+.h-article-db {
+    background-position: 0 -44px;
+}
+.h-article-txwb {
+    background-position: 0 -88px;
+}
+.h-article-kj {
+    background-position: 0 -132px;
+}
+.h-article-wx {
+    background-position: 0 -176px;
+}
+
+
+
+
+
+.article-b-zan,.article-b-care {
+    display: inline-block;
+    color: #999;
+    line-height: 19px;
+    cursor: pointer;
+    text-indent: 30px;
+    background: url(/images/article-info.png) no-repeat
+}
+
+.article-b-zan {
+    background-position: 20px -74px;
+    height: 19px;
+    padding-right: 20px;
+    margin: 0 20px;
+    text-indent: 50px;
+    border-left: 1px solid #ccc;
+    border-right: 1px solid #ccc;
+    color: #b31c27!important
+}
+
+.article-b-zan {
+    color: #b31c27!important;
+    position: relative;
+}
+
+.article-b-zan span {
+    position: relative;
+    top: 2px
+}
+
+.article-b-care {
+    background-position: 0 -54px;
+    height: 18px;
+    width: 40px;
+    vertical-align: middle;
+    margin-top: -2px
+}
+
+.article-b-care .add1 {
+    font-weight: normal;
+    margin-left: -30px
+}

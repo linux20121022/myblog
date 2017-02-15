@@ -4,6 +4,7 @@ namespace frontend\controllers;
 use common\models\Article;
 use GuzzleHttp\Psr7\Response;
 use Yii;
+use yii\base\Exception;
 use yii\base\InvalidParamException;
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;
@@ -13,10 +14,12 @@ use common\models\LoginForm;
 use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
-use frontend\models\ContactForm;
+use common\models\ContactForm;
 use common\models\User;
 use yii\helpers\StringHelper;
 use yii\helpers\Html;
+use common\models\ArticleStatus;
+use common\models\Comment;
 
 /**
  * Site controller
@@ -80,10 +83,12 @@ class SiteController extends Controller
         $user = User::findOne(1);
         $picList = Article::indexPicList();
         $artList = Article::indexList();
+        $contactForm = new ContactForm();
         return $this->render('index',[
             'user' => $user,
             'pic' => $picList,
-            'artList' => $artList
+            'artList' => $artList,
+            'contactForm' => $contactForm
         ]);
     }
 
@@ -125,6 +130,52 @@ class SiteController extends Controller
         }
         return ['code'=>1,'msg'=>'成功','data'=>$picData];
     }
+
+    public function actionView($id){
+        $user = User::findOne(1);
+        $model = $this->findModel($id);
+        $article_extends = $model->articleExtends;
+        $model->content = html::decode($article_extends->content);
+        //查询文章的状态
+        $article = new ArticleStatus();
+        $status_arr = $article->getStatus();
+        $img_src = isset($model->file->img_src) ? $model->file->img_src : '';
+        //留言板
+        $comment = new Comment();
+        $comm_data = $comment->findComm($id);
+//        var_dump($comm_data);die();
+        return $this->render('view', [
+            'user' => $user,
+            'model' => $model,
+            'status_arr'=>$status_arr,
+            'src' => $img_src,
+            'comment' => $comment,
+            'comm_data' => $comm_data
+        ]);
+//        $this->render('view',
+//            ['model' => $data]
+//        );
+    }
+
+    /**
+     * @desc 增加留言
+     */
+    public function actionAddcomment(){
+        $comment = new Comment();
+        if(Yii::$app->request->isPost){
+            if($comment->addComment(Yii::$app->request->post())){
+//                echo 111;
+//                var_dump(Yii::$app->request->referrer);
+                $this->redirect(Yii::$app->request->referrer);
+            }
+        }
+       // echo 11;die();
+    }
+//    public function actionContact(){
+//        $post = Yii::$app->request->post();
+//        var_dump($post);
+//        die();
+//    }
     /**
      * Logs in a user.
      *
@@ -160,23 +211,54 @@ class SiteController extends Controller
 
     /**
      * Displays contact page.
-     *
+     * @desc 联系我们
      * @return mixed
      */
     public function actionContact()
     {
         $model = new ContactForm();
-        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+//       $mail = Yii::$app->mailer->compose()
+//            ->setTo('619278335@qq.com')
+//             ->setFrom(['13661997454@139.com'=> 'name'])
+//            ->setSubject('title')
+//            ->setHtmlBody('<a href="javascript:void(0);">内容</a>');
+//        try {
+//            if ($mail->send()) {
+//                echo 'success';
+//            } else {
+//                echo 'fail';
+//            }
+//
+//        }catch (Exception $e){
+//            echo 111;
+//            var_dump($e->getMessage());
+//            die();
+//        }
+//
+//        Yii::$app->mailer->compose()
+//            ->setTo('619278335@qq.com')
+//            ->setFrom(['13661997454@139.com' => 'yuhaiqun'])
+//            ->setSubject('留言')
+//            ->setTextBody('this is a test content')
+//            ->send();
+
+//        var_dump(Yii::$app->request->post());
+//        var_dump($model->load(Yii::$app->request->post()));
+//        var_dump($model->getErrors());
+//        die();
+        if ($model->load(Yii::$app->request->post()) && $model->validate() && $model->save()) {
             if ($model->sendEmail(Yii::$app->params['adminEmail'])) {
+
                 Yii::$app->session->setFlash('success', 'Thank you for contacting us. We will respond to you as soon as possible.');
             } else {
+                echo 333;die();
                 Yii::$app->session->setFlash('error', 'There was an error sending your message.');
             }
 
-            return $this->refresh();
+//            return $this->refresh();
         } else {
-            return $this->render('contact', [
-                'model' => $model,
+            return $this->renderPartial('contact', [
+                'contactForm' => $model,
             ]);
         }
     }
@@ -259,5 +341,13 @@ class SiteController extends Controller
         return $this->render('resetPassword', [
             'model' => $model,
         ]);
+    }
+    protected function findModel($id)
+    {
+        if (($model = Article::findOne($id)) !== null) {
+            return $model;
+        } else {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
     }
 }
