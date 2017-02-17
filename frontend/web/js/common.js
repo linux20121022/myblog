@@ -43,11 +43,13 @@ $("#next_page").click(function(){
         var html = '';
         if(res.data != '') {
             $.each(res.data, function (key, val) {
+                html += '<a href="' + val.url + '" target="_blank">';
                 html += '<article class="6u 12u$(3) work-item">';
-                html += '<a href="images/fulls/01.jpg" class="image fit thumb"><img style="width:312px;height: 182px" src="' + val.img_src + '" alt="" /></a>';
+                html += '<img style="width:312px;height: 182px" src="' + val.img_src + '" alt="" />';
                 html += '<h3>' + val.title + '</h3>';
                 html += '<p>' + val.content + '</p>';
                 html += '</article>';
+                html += '</a>';
             })
             $("#pic_list").append(html);
             p++;
@@ -77,8 +79,10 @@ $("#next_art_page").click(function(){
         var html = '';
         if(res.data != '') {
             $.each(res.data, function (key, val) {
+                html += '<a href="' + val.url + '" target="_blank">';
                 html += '<h4>' + val.title + '</h4>';
                 html += '<p>' + val.content + '</p>';
+                html += '</a>';
 
             })
             $("#art_list").append(html);

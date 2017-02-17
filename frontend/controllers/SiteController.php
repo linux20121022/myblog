@@ -6,6 +6,7 @@ use GuzzleHttp\Psr7\Response;
 use Yii;
 use yii\base\Exception;
 use yii\base\InvalidParamException;
+use yii\helpers\Url;
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
@@ -70,6 +71,9 @@ class SiteController extends Controller
                 'class' => 'yii\captcha\CaptchaAction',
                 'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null,
             ],
+            'upload' => [
+                'class' => 'kucha\ueditor\UEditorAction',
+            ]
         ];
     }
 
@@ -108,6 +112,7 @@ class SiteController extends Controller
             $picData[$key]['title'] = StringHelper::truncate_utf8_string(Html::decode($val->title),20);
             $picData[$key]['content'] = StringHelper::truncate_utf8_string(Html::decode($val->content),25);
             $picData[$key]['id'] = $val->id;
+            $picData[$key]['url'] = Url::to(["site/view",'id'=> $val->id]);
         }
         return ['code'=>1,'msg'=>'成功','data'=>$picData];
     }
@@ -127,6 +132,7 @@ class SiteController extends Controller
             $picData[$key]['title'] = StringHelper::truncate_utf8_string(Html::decode($val->title),20);
             $picData[$key]['content'] = StringHelper::truncate_utf8_string(Html::decode($val->content),25);
             $picData[$key]['id'] = $val->id;
+            $picData[$key]['url'] = Url::to(["site/view",'id'=> $val->id]);
         }
         return ['code'=>1,'msg'=>'成功','data'=>$picData];
     }
@@ -143,18 +149,21 @@ class SiteController extends Controller
         //留言板
         $comment = new Comment();
         $comm_data = $comment->findComm($id);
-//        var_dump($comm_data);die();
+        //redis读取缓存
+        $cache = Yii::$app->cache;
+        $key = Yii::$app->params['redisCount'];
+        $full_key = $key.$id;
+        $cache->redis->incr($full_key);
+        $count = $cache->redis->get($full_key);
         return $this->render('view', [
             'user' => $user,
             'model' => $model,
             'status_arr'=>$status_arr,
             'src' => $img_src,
             'comment' => $comment,
-            'comm_data' => $comm_data
+            'comm_data' => $comm_data,
+            'read_count' => $count,
         ]);
-//        $this->render('view',
-//            ['model' => $data]
-//        );
     }
 
     /**
@@ -261,6 +270,10 @@ class SiteController extends Controller
                 'contactForm' => $model,
             ]);
         }
+    }
+    public function actionUpload()
+    {
+
     }
 
     /**

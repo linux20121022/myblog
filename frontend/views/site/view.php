@@ -43,9 +43,10 @@ $this->params['breadcrumbs'][] = $this->title;
         <div style="text-align: center">
             <span>作者:</span><span><?= $model->author->username;?></span>&nbsp;
             <span>时间:</span><span><?= date("Y-m-d H:i:s",$model->create_time);?></span>
+            <span>阅读数:</span><span><?php echo $read_count;?></span>
         </div>
         <p>
-            <?= Html::decode($model->content) ?>
+            <?= $model->content ?>
         </p>
         <div class="h-article-share">
             <span class="h-fx-article fl">分享到：</span>

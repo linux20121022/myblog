@@ -42,7 +42,7 @@ $this->title = 'My Yii Application';
             <a href="<?php echo Url::to(["site/view",'id'=> $val->id])?>" target="_blank">
             <article class="6u 12u$(3) work-item">
                 <img style="width:312px;height: 182px" src="<?php echo Yii::$app->params['adminUrl'] .$val->img_src?>" alt="" />
-                    <h3><?php echo $val->title?>11</h3>
+                    <h3><?php echo $val->title?></h3>
                     <p><?php echo StringHelper::truncate_utf8_string(html::decode($val->content),25) ?></p>
             </article>
             </a>
@@ -131,7 +131,7 @@ $this->title = 'My Yii Application';
 <section>
     <div id="art_list">
     <?php foreach($artList as $key=>$val){ ?>
-        <a href="<?php echo Url::to(["site/view",'id'=> $val->id]);?>">
+        <a href="<?php echo Url::to(["site/view",'id'=> $val->id]);?>" target="_blank">
     <h4><?php echo $val->title?></h4>
     <p><?php echo StringHelper::truncate_utf8_string(html::decode($val->content),80) ?></p>
         </a>
