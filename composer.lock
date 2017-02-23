@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "e219bedfab755c0e40b60a450f2daa55",
+    "content-hash": "b8f796078eccd41f425e7f1323ddab88",
     "packages": [
         {
             "name": "bower-asset/bootstrap",
@@ -304,6 +304,55 @@
                 "html"
             ],
             "time": "2016-07-16T12:58:58+00:00"
+        },
+        {
+            "name": "heyanlong/yii2-redis",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/heyanlong/yii2-redis.git",
+                "reference": "b8aa42c02568cb1a881a87f29f00ab61eb87a31c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/heyanlong/yii2-redis/zipball/b8aa42c02568cb1a881a87f29f00ab61eb87a31c",
+                "reference": "b8aa42c02568cb1a881a87f29f00ab61eb87a31c",
+                "shasum": ""
+            },
+            "require": {
+                "yiisoft/yii2": ">=2.0.4",
+                "yiisoft/yii2-redis": "~2.0.0"
+            },
+            "type": "yii2-extension",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "heyanlong\\redis\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "heyanlong",
+                    "email": "yanlong_he@163.com"
+                }
+            ],
+            "description": "Redis 3.x Cluster Cache, Session and ActiveRecord for the Yii framework",
+            "keywords": [
+                "active-record",
+                "cache",
+                "redis",
+                "session",
+                "yii2"
+            ],
+            "time": "2015-05-25T02:07:06+00:00"
         },
         {
             "name": "kucha/ueditor",
@@ -749,7 +798,7 @@
                 "gherkin",
                 "parser"
             ],
-            "time": "2016-10-30T11:50:56+00:00"
+            "time": "2016-10-30 11:50:56"
         },
         {
             "name": "bower-asset/typeahead.js",
@@ -866,7 +915,7 @@
                 "functional testing",
                 "unit testing"
             ],
-            "time": "2017-02-04T02:16:42+00:00"
+            "time": "2017-02-04 02:16:42"
         },
         {
             "name": "codeception/verify",
@@ -956,7 +1005,7 @@
                 "constructor",
                 "instantiate"
             ],
-            "time": "2017-01-23T09:23:06+00:00"
+            "time": "2017-01-23 09:23:06"
         },
         {
             "name": "fzaninotto/faker",
@@ -1006,7 +1055,7 @@
                 "faker",
                 "fixtures"
             ],
-            "time": "2017-02-01T09:18:35+00:00"
+            "time": "2017-02-01 09:18:35"
         },
         {
             "name": "guzzlehttp/psr7",
@@ -1071,7 +1120,7 @@
                 "uri",
                 "url"
             ],
-            "time": "2017-02-14T19:21:36+00:00"
+            "time": "2017-02-14 19:21:36"
         },
         {
             "name": "phpdocumentor/reflection-common",
@@ -1125,7 +1174,7 @@
                 "reflection",
                 "static analysis"
             ],
-            "time": "2015-12-27T11:43:31+00:00"
+            "time": "2015-12-27 11:43:31"
         },
         {
             "name": "phpdocumentor/reflection-docblock",
@@ -1255,7 +1304,7 @@
                 }
             ],
             "description": "A comprehensive library for generating differences between two hashable objects (strings or arrays).",
-            "time": "2016-04-07T12:29:16+00:00"
+            "time": "2016-04-07 12:29:16"
         },
         {
             "name": "phpspec/prophecy",
@@ -1318,7 +1367,7 @@
                 "spy",
                 "stub"
             ],
-            "time": "2016-11-21T14:58:47+00:00"
+            "time": "2016-11-21 14:58:47"
         },
         {
             "name": "phpunit/php-code-coverage",
@@ -1380,7 +1429,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2015-10-06T15:47:00+00:00"
+            "time": "2015-10-06 15:47:00"
         },
         {
             "name": "phpunit/php-file-iterator",
@@ -1427,7 +1476,7 @@
                 "filesystem",
                 "iterator"
             ],
-            "time": "2016-10-03T07:40:28+00:00"
+            "time": "2016-10-03 07:40:28"
         },
         {
             "name": "phpunit/php-text-template",
@@ -1561,7 +1610,7 @@
             "keywords": [
                 "tokenizer"
             ],
-            "time": "2016-11-15T14:06:22+00:00"
+            "time": "2016-11-15 14:06:22"
         },
         {
             "name": "phpunit/phpunit",
@@ -1633,7 +1682,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2017-02-06T05:18:07+00:00"
+            "time": "2017-02-06 05:18:07"
         },
         {
             "name": "phpunit/phpunit-mock-objects",
@@ -1689,7 +1738,7 @@
                 "mock",
                 "xunit"
             ],
-            "time": "2015-10-02T06:51:40+00:00"
+            "time": "2015-10-02 06:51:40"
         },
         {
             "name": "psr/http-message",
@@ -1739,7 +1788,7 @@
                 "request",
                 "response"
             ],
-            "time": "2016-08-06T14:39:51+00:00"
+            "time": "2016-08-06 14:39:51"
         },
         {
             "name": "psr/log",
@@ -1786,7 +1835,7 @@
                 "psr",
                 "psr-3"
             ],
-            "time": "2016-10-10T12:19:37+00:00"
+            "time": "2016-10-10 12:19:37"
         },
         {
             "name": "sebastian/comparator",
@@ -1850,7 +1899,7 @@
                 "compare",
                 "equality"
             ],
-            "time": "2017-01-29T09:50:25+00:00"
+            "time": "2017-01-29 09:50:25"
         },
         {
             "name": "sebastian/diff",
@@ -1902,7 +1951,7 @@
             "keywords": [
                 "diff"
             ],
-            "time": "2016-10-03T07:45:03+00:00"
+            "time": "2016-10-03 07:45:03"
         },
         {
             "name": "sebastian/environment",
@@ -1952,7 +2001,7 @@
                 "environment",
                 "hhvm"
             ],
-            "time": "2016-08-18T05:49:44+00:00"
+            "time": "2016-08-18 05:49:44"
         },
         {
             "name": "sebastian/exporter",
@@ -2019,7 +2068,7 @@
                 "export",
                 "exporter"
             ],
-            "time": "2016-10-03T07:44:30+00:00"
+            "time": "2016-10-03 07:44:30"
         },
         {
             "name": "sebastian/global-state",
@@ -2070,7 +2119,7 @@
             "keywords": [
                 "global state"
             ],
-            "time": "2016-10-03T07:46:22+00:00"
+            "time": "2016-10-03 07:46:22"
         },
         {
             "name": "sebastian/recursion-context",
@@ -2123,7 +2172,7 @@
             ],
             "description": "Provides functionality to recursively process PHP variables",
             "homepage": "http://www.github.com/sebastianbergmann/recursion-context",
-            "time": "2016-10-03T07:41:43+00:00"
+            "time": "2016-10-03 07:41:43"
         },
         {
             "name": "sebastian/version",
@@ -2215,7 +2264,7 @@
             ],
             "description": "Symfony BrowserKit Component",
             "homepage": "https://symfony.com",
-            "time": "2017-01-31T21:52:27+00:00"
+            "time": "2017-01-31 21:52:27"
         },
         {
             "name": "symfony/console",
@@ -2283,7 +2332,7 @@
             ],
             "description": "Symfony Console Component",
             "homepage": "https://symfony.com",
-            "time": "2017-02-14T16:35:24+00:00"
+            "time": "2017-02-14 16:35:24"
         },
         {
             "name": "symfony/css-selector",
@@ -2336,7 +2385,7 @@
             ],
             "description": "Symfony CssSelector Component",
             "homepage": "https://symfony.com",
-            "time": "2017-01-02T20:33:09+00:00"
+            "time": "2017-01-02 20:33:09"
         },
         {
             "name": "symfony/debug",
@@ -2392,7 +2441,7 @@
             ],
             "description": "Symfony Debug Component",
             "homepage": "https://symfony.com",
-            "time": "2017-02-12T19:33:56+00:00"
+            "time": "2017-02-12 19:33:56"
         },
         {
             "name": "symfony/dom-crawler",
@@ -2448,7 +2497,7 @@
             ],
             "description": "Symfony DomCrawler Component",
             "homepage": "https://symfony.com",
-            "time": "2017-01-21T17:19:16+00:00"
+            "time": "2017-01-21 17:19:16"
         },
         {
             "name": "symfony/event-dispatcher",
@@ -2511,7 +2560,7 @@
             ],
             "description": "Symfony EventDispatcher Component",
             "homepage": "https://symfony.com",
-            "time": "2017-02-02T13:15:15+00:00"
+            "time": "2017-02-02 13:15:15"
         },
         {
             "name": "symfony/finder",
@@ -2560,7 +2609,7 @@
             ],
             "description": "Symfony Finder Component",
             "homepage": "https://symfony.com",
-            "time": "2017-02-12T22:09:17+00:00"
+            "time": "2017-02-12 22:09:17"
         },
         {
             "name": "symfony/polyfill-mbstring",
@@ -2619,7 +2668,7 @@
                 "portable",
                 "shim"
             ],
-            "time": "2016-11-14T01:06:16+00:00"
+            "time": "2016-11-14 01:06:16"
         },
         {
             "name": "symfony/yaml",
@@ -2674,7 +2723,7 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "https://symfony.com",
-            "time": "2017-02-10T14:48:44+00:00"
+            "time": "2017-02-10 14:48:44"
         },
         {
             "name": "webmozart/assert",
@@ -2724,7 +2773,7 @@
                 "check",
                 "validate"
             ],
-            "time": "2016-11-23T20:04:41+00:00"
+            "time": "2016-11-23 20:04:41"
         },
         {
             "name": "yiisoft/yii2-debug",
@@ -2771,7 +2820,7 @@
                 "debugger",
                 "yii2"
             ],
-            "time": "2017-02-13T20:29:04+00:00"
+            "time": "2017-02-13 20:29:04"
         },
         {
             "name": "yiisoft/yii2-faker",
@@ -2818,7 +2867,7 @@
                 "faker",
                 "yii2"
             ],
-            "time": "2017-02-11T20:27:55+00:00"
+            "time": "2017-02-11 20:27:55"
         },
         {
             "name": "yiisoft/yii2-gii",
@@ -2871,7 +2920,7 @@
                 "gii",
                 "yii2"
             ],
-            "time": "2017-02-02T22:45:14+00:00"
+            "time": "2017-02-02 22:45:14"
         }
     ],
     "aliases": [],

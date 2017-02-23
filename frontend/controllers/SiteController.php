@@ -70,6 +70,11 @@ class SiteController extends Controller
             'captcha' => [
                 'class' => 'yii\captcha\CaptchaAction',
                 'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null,
+                'testLimit'=>1,
+                'height' => 34,
+                'width' => 80,
+                'minLength' => 4,
+                'maxLength' => 4
             ],
             'upload' => [
                 'class' => 'kucha\ueditor\UEditorAction',
@@ -152,6 +157,7 @@ class SiteController extends Controller
         //redis读取缓存
         $cache = Yii::$app->cache;
         $key = Yii::$app->params['redisCount'];
+//        var_dump($cache);die();
         $full_key = $key.$id;
         $cache->redis->incr($full_key);
         $count = $cache->redis->get($full_key);
