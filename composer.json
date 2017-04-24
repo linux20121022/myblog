@@ -21,7 +21,8 @@
 		"yiisoft/yii2-redis": "~2.0.0",
 
         "kucha/ueditor": "*",
-        "heyanlong/yii2-redis": "^2.0"
+        "heyanlong/yii2-redis": "^2.0",
+        "callmez/yii2-wechat-sdk": "dev-master"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",

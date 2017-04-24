@@ -11,23 +11,23 @@ return [
         'cache' => [
             'class' => 'yii\redis\Cache'
         ],
-//        'redis' => [
-//            'class' => 'heyanlong\redis\Connection',
-//            'master' => [
-//                '112.74.185.109:7000',
-//                '112.74.185.109:7001',
-//                '112.74.185.109:7002',
-//            ],
-//            'database' => 0,
-//            'password' => '123456',
-//        ],
         'redis' => [
-            'class' => 'yii\redis\Connection',
-            'hostname' => '112.74.185.109',
-            'port' => 7001,
+            'class' => 'heyanlong\redis\Connection',
+            'master' => [
+                '112.74.185.109:7000',
+               '112.74.185.109:7001',
+                '112.74.185.109:7002',
+            ],
+            'database' => 0,
             'password' => '123456',
-            'database'=>0,
-        ]
+        ],
+      //  'redis' => [
+      //      'class' => 'yii\redis\Connection',
+      //      'hostname' => '112.74.185.109',
+      //      'port' => 7001,
+      //      'password' => '123456',
+      //      'database'=>0,
+       // ]
 //        'redis' => [
 //            'class' => 'yii\redis\Connection',
 ////            'hostname' => '112.74.185.109',

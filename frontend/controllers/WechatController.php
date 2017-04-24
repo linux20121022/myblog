@@ -30,25 +30,38 @@ define("TOKEN", "weixin");
 //$wechatObj->valid();
 class WechatController extends Controller
 {
+    public $enableCsrfValidation = false;
     public function actionValid()
     {
-        $echoStr = $_GET["echostr"];
-
+        file_put_contents('../runtime/wechat.txt','-----------'.date("Y-m-d H:i:s").'-----------',FILE_APPEND);
+        
+        $echoStr = isset($_GET["echostr"]) ? $_GET["echostr"] :'';
+        file_put_contents('../runtime/wechat.txt','-----------'.date("Y-m-d H:i:s").'-----------'.$echoStr,FILE_APPEND);
+if($echoStr){
         //valid signature , option
         if($this->checkSignature()){
             echo $echoStr;
             exit;
         }
         die();
+}else{
+     file_put_contents('../runtime/wechat.txt','-----------'.date("Y-m-d H:i:s").    '-----------'.$echoStr,FILE_APPEND);
+     
+    $this->ActionResponseMsg();
+
+}
     }
 
-    public function ActionresponseMsg()
-    {
+    public function ActionResponseMsg()
+    {  file_put_contents("../runtime/d.txt",json_encode($_SERVER));
+        //file_put_contents('../runtime/c.txt','1111');
         //get post data, May be due to the different environments
-        $postStr = $GLOBALS["HTTP_RAW_POST_DATA"];
-
+       // $postStr = $GLOBALS["HTTP_RAW_POST_DATA"];
+ $postStr =  file_get_contents('php://input');
+         file_put_contents('../runtime/c.txt','2222222222'.$postStr.'123456',FILE_APPEND);
         //extract post data
         if (!empty($postStr)){
+
             /* libxml_disable_entity_loader is to prevent XML eXternal Entity Injection,
                the best way is to check the validity of xml by yourself */
             libxml_disable_entity_loader(true);
@@ -65,18 +78,21 @@ class WechatController extends Controller
 							<Content><![CDATA[%s]]></Content>
 							<FuncFlag>0</FuncFlag>
 							</xml>";
+            file_put_contents("../runtime/a.txt",$keyword,FILE_APPEND);
             if(!empty( $keyword ))
             {
                 $msgType = "text";
-                $contentStr = "Welcome to wechat world!";
+                $contentStr = "hello world!";
+                file_put_contents("../runtime/a.txt",$keyword,FILE_APPEND);
                 $resultStr = sprintf($textTpl, $fromUsername, $toUsername, $time, $msgType, $contentStr);
+                file_put_contents("../runtime/a.txt",$resultStr."\r\n",FILE_APPEND);
                 echo $resultStr;
             }else{
                 echo "Input something...";
             }
-
+exit;
         }else {
-            echo "";
+            echo "11111";
             exit;
         }
     }
@@ -105,6 +121,7 @@ class WechatController extends Controller
             return false;
         }
     }
+   
     //用户授权接口：获取access_token、openId等；获取并保存用户资料到数据库
     public function actionAccesstoken()
     {
@@ -113,13 +130,15 @@ class WechatController extends Controller
         $appid = Yii::$app->params['wechat']['appid'];
         $appsecret = Yii::$app->params['wechat']['appsecret'];
         $request_url = 'https://api.weixin.qq.com/sns/oauth2/access_token?appid='.$appid.'&secret='.$appsecret.'&code='.$code.'&grant_type=authorization_code';
+        file_put_content('a.txt',json_encode($request_url)."\r\n",FILE_APPEND);
         //初始化一个curl会话
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $request_url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        $result = curl_exec($ch);
+         $result = curl_exec($ch);
         curl_close($ch);
         $result = $this->response($result);
+        file_put_content('a.txt',json_encode($result)."\r\n",FILE_APPEND);
         //获取token和openid成功，数据解析
         $access_token = $result['access_token'];
         $refresh_token = $result['refresh_token'];

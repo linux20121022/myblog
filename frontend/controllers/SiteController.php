@@ -161,6 +161,7 @@ class SiteController extends Controller
         $full_key = $key.$id;
         $cache->redis->incr($full_key);
         $count = $cache->redis->get($full_key);
+//        var_dump($count);die();
         return $this->render('view', [
             'user' => $user,
             'model' => $model,
