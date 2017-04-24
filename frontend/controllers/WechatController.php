@@ -21,161 +21,28 @@ use yii\helpers\StringHelper;
 use yii\helpers\Html;
 use common\models\ArticleStatus;
 use common\models\Comment;
+use dodgepudding\wechat\sdk\Wechat as wechat;
 
 /**
  * Site controller
  */
-define("TOKEN", "weixin");
-//$wechatObj = new WechatController();
-//$wechatObj->valid();
-class WechatController extends Controller
-{
-    public $enableCsrfValidation = false;
-    public function actionValid()
-    {
-        file_put_contents('../runtime/wechat.txt','-----------'.date("Y-m-d H:i:s").'-----------',FILE_APPEND);
-        
-        $echoStr = isset($_GET["echostr"]) ? $_GET["echostr"] :'';
-        file_put_contents('../runtime/wechat.txt','-----------'.date("Y-m-d H:i:s").'-----------'.$echoStr,FILE_APPEND);
-if($echoStr){
-        //valid signature , option
-        if($this->checkSignature()){
-            echo $echoStr;
-            exit;
-        }
-        die();
-}else{
-     file_put_contents('../runtime/wechat.txt','-----------'.date("Y-m-d H:i:s").    '-----------'.$echoStr,FILE_APPEND);
-     
-    $this->ActionResponseMsg();
+$options = array(
+    'token'=>'weixin', //填写你设定的key
+    'encodingaeskey'=>'' //填写加密用的EncodingAESKey，如接口为明文模式可忽略
+);
 
-}
-    }
-
-    public function ActionResponseMsg()
-    {  file_put_contents("../runtime/d.txt",json_encode($_SERVER));
-        //file_put_contents('../runtime/c.txt','1111');
-        //get post data, May be due to the different environments
-       // $postStr = $GLOBALS["HTTP_RAW_POST_DATA"];
- $postStr =  file_get_contents('php://input');
-         file_put_contents('../runtime/c.txt','2222222222'.$postStr.'123456',FILE_APPEND);
-        //extract post data
-        if (!empty($postStr)){
-
-            /* libxml_disable_entity_loader is to prevent XML eXternal Entity Injection,
-               the best way is to check the validity of xml by yourself */
-            libxml_disable_entity_loader(true);
-            $postObj = simplexml_load_string($postStr, 'SimpleXMLElement', LIBXML_NOCDATA);
-            $fromUsername = $postObj->FromUserName;
-            $toUsername = $postObj->ToUserName;
-            $keyword = trim($postObj->Content);
-            $time = time();
-            $textTpl = "<xml>
-							<ToUserName><![CDATA[%s]]></ToUserName>
-							<FromUserName><![CDATA[%s]]></FromUserName>
-							<CreateTime>%s</CreateTime>
-							<MsgType><![CDATA[%s]]></MsgType>
-							<Content><![CDATA[%s]]></Content>
-							<FuncFlag>0</FuncFlag>
-							</xml>";
-            file_put_contents("../runtime/a.txt",$keyword,FILE_APPEND);
-            if(!empty( $keyword ))
-            {
-                $msgType = "text";
-                $contentStr = "hello world!";
-                file_put_contents("../runtime/a.txt",$keyword,FILE_APPEND);
-                $resultStr = sprintf($textTpl, $fromUsername, $toUsername, $time, $msgType, $contentStr);
-                file_put_contents("../runtime/a.txt",$resultStr."\r\n",FILE_APPEND);
-                echo $resultStr;
-            }else{
-                echo "Input something...";
-            }
-exit;
-        }else {
-            echo "11111";
-            exit;
-        }
-    }
-
-    private function checkSignature()
-    {
-        // you must define TOKEN by yourself
-        if (!defined("TOKEN")) {
-            throw new Exception('TOKEN is not defined!');
-        }
-
-        $signature = $_GET["signature"];
-        $timestamp = $_GET["timestamp"];
-        $nonce = $_GET["nonce"];
-
-        $token = TOKEN;
-        $tmpArr = array($token, $timestamp, $nonce);
-        // use SORT_STRING rule
-        sort($tmpArr, SORT_STRING);
-        $tmpStr = implode( $tmpArr );
-        $tmpStr = sha1( $tmpStr );
-
-        if( $tmpStr == $signature ){
-            return true;
-        }else{
-            return false;
-        }
-    }
-   
-    //用户授权接口：获取access_token、openId等；获取并保存用户资料到数据库
-    public function actionAccesstoken()
-    {
-        $code = $_GET["code"];
-        $state = $_GET["state"];
-        $appid = Yii::$app->params['wechat']['appid'];
-        $appsecret = Yii::$app->params['wechat']['appsecret'];
-        $request_url = 'https://api.weixin.qq.com/sns/oauth2/access_token?appid='.$appid.'&secret='.$appsecret.'&code='.$code.'&grant_type=authorization_code';
-        file_put_content('a.txt',json_encode($request_url)."\r\n",FILE_APPEND);
-        //初始化一个curl会话
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $request_url);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-         $result = curl_exec($ch);
-        curl_close($ch);
-        $result = $this->response($result);
-        file_put_content('a.txt',json_encode($result)."\r\n",FILE_APPEND);
-        //获取token和openid成功，数据解析
-        $access_token = $result['access_token'];
-        $refresh_token = $result['refresh_token'];
-        $openid = $result['openid'];
-        //请求微信接口，获取用户信息
-        $userInfo = $this->getUserInfo($access_token,$openid);
-        $user_check = WechatUser::find()->where(['openid'=>$openid])->one();
-        if ($user_check) {
-            //更新用户资料
-            $user_check->nickname = $userInfo['nickname'];
-            $user_check->sex = $userInfo['sex'];
-            $user_check->headimgurl = $userInfo['headimgurl'];
-            $user_check->country = $userInfo['country'];
-            $user_check->province = $userInfo['province'];
-            $user_check->city = $userInfo['city'];
-            $user_check->access_token = $access_token;
-            $user_check->refresh_token = $refresh_token;
-            $user_check->update();
-        } else {
-            //保存用户资料
-            $user = new WechatUser();
-            $user->nickname = $userInfo['nickname'];
-            $user->sex = $userInfo['sex'];
-            $user->headimgurl = $userInfo['headimgurl'];
-            $user->country = $userInfo['country'];
-            $user->province = $userInfo['province'];
-            $user->city = $userInfo['city'];
-            $user->access_token = $access_token;
-            $user->refresh_token = $refresh_token;
-            $user->openid = $openid;
-            $user->save();
-        }
-        //前端网页的重定向
-        if ($openid) {
-            return $this->redirect($state.$openid);
-        } else {
-            return $this->redirect($state);
-        }
-    }
+$weObj = new Wechat($options);
+$weObj->valid();//明文或兼容模式可以在接口验证通过后注释此句，但加密模式一定不能注释，否则会验证失败
+$type = $weObj->getRev()->getRevType();
+switch($type) {
+    case Wechat::MSGTYPE_TEXT:
+        $weObj->text("hello, I'm wechat")->reply();
+        exit;
+        break;
+    case Wechat::MSGTYPE_EVENT:
+        break;
+    case Wechat::MSGTYPE_IMAGE:
+        break;
+    default:
+        $weObj->text("help info")->reply();
 }

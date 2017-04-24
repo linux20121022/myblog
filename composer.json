@@ -22,7 +22,7 @@
 
         "kucha/ueditor": "*",
         "heyanlong/yii2-redis": "^2.0",
-        "callmez/yii2-wechat-sdk": "dev-master"
+        "dodgepudding/wechat-php-sdk": "dev-master"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",
